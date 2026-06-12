@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "workspace-tools": {
+      "command": "docker",
+      "args": ["exec", "-i", "workspace-mcp", "python", "-m", "src.servers.workspace_tools"],
+      "timeout": 30
+    },
+    "workspace-cli": {
+      "command": "docker",
+      "args": ["exec", "-i", "workspace-mcp", "python", "-m", "src.servers.workspace_cli"],
+      "timeout": 30
+    }
+  }
+}
