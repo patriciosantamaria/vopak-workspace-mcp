@@ -88,6 +88,27 @@ graph TD
 
 ***
 
+## Setup Options: Granular Tools vs. CLI-Only
+
+This repository allows you to choose between running **both servers** (recommended for full functionality) or running a **minimal CLI-only setup**. 
+
+| Setup Type | Enabled Servers | Credentials Needed | Best For | Trade-offs |
+| :--- | :--- | :--- | :--- | :--- |
+| **Full Setup** *(Default)* | `workspace-tools` & `workspace-cli` | `gws` OAuth + `gcloud` Application Default Credentials | Precise document manipulation (Slides, Docs, Sheets, Drive) + CLI fallbacks | Requires double authentication step (GWS + gcloud). |
+| **CLI-Only Setup** | `workspace-cli` only | `gws` OAuth only | Lightweight automations (Gmail, Calendar, Tasks, Forms, People) | Agent runs raw CLI commands instead of structured APIs. **Requires CLI Reference Skill.** |
+
+### Running CLI-Only Setup
+If you want to keep your setup lightweight and bypass the Google Cloud SDK (`gcloud`) setup, you can disable `workspace-tools` in your IDE configuration and only authenticate the GWS CLI:
+
+1. In your `mcp_config.json`, remove the `workspace-tools` server block.
+2. Only run the GWS CLI login step during authentication (`docker exec -it workspace-mcp gws auth login`).
+
+> [!WARNING]
+> If you choose the **CLI-Only Setup**, you **MUST** import the [gws_cli_reference SKILL](skills/gws_cli_reference/SKILL.md) into your AI Agent's instructions profile (or copy its contents directly into your system instructions).
+> Because the CLI wrapper is an "escape hatch" with untyped string inputs, AI agents do not natively know the valid syntax parameters for the `gws` tool CLI commands. Improving the Agent's context with this reference skill ensures they can format calls for Gmail, Calendar, Tasks, etc., without syntax errors.
+
+***
+
 ## Quick Start Setup
 
 Configure and launch your Vopak Workspace MCP environment in 4 steps:
