@@ -12,13 +12,13 @@ You are using the `workspace-cli` MCP server which wraps the [Google Workspace C
 ## When to Use
 
 Use the CLI wrapper (`gws_read`, `gws_write`, `gws_destructive`) **only** when `workspace-tools` does not have a dedicated tool. Check `workspace-tools` first for:
-- ❌ **Slides** — use `slides_*` tools instead
-- ❌ **Docs** — use `docs_*` tools instead
-- ❌ **Sheets** — use `sheets_*` tools instead
-- ❌ **Drive** — use `drive_*` tools instead
-- ❌ **Branded content** — use `create_vopak_presentation` / `create_vopak_document`
+- **Slides** — use `slides_*` tools instead
+- **Docs** — use `docs_*` tools instead
+- **Sheets** — use `sheets_*` tools instead
+- **Drive** — use `drive_*` tools instead
+- **Branded content** — use `create_vopak_presentation` / `create_vopak_document`
 
-✅ **Use the CLI for**: Gmail, Calendar, Tasks, Forms, People, Admin, Groups, Chat
+ **Use the CLI for**: Gmail, Calendar, Tasks, Forms, People, Admin, Groups, Chat
 
 ## Command Structure
 
@@ -185,7 +185,7 @@ drive permissions delete --params '{"fileId": "FILE_ID", "permissionId": "PERMIS
 |:-----|:-------------|:-----------|
 | `gws_read` | `get`, `list`, `query`, `export`, `download`, `schema` | Server-side verb gate — rejects write/delete verbs |
 | `gws_write` | `create`, `update`, `send`, `insert`, `patch`, `copy`, `move` | Verb gate + `reason` parameter required |
-| `gws_destructive` | `delete`, `trash` | Verb gate + `reason` required + ⚠️ HITL confirmation |
+| `gws_destructive` | `delete`, `trash` | Verb gate + `reason` required + ️ HITL confirmation |
 
 ## Tips for Accuracy
 
