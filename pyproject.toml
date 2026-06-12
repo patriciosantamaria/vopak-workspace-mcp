@@ -1,7 +1,7 @@
 [project]
-name = "vopak-workspace-mcp"
-version = "1.0.0"
-description = "Google Workspace MCP servers for AI agents — Slides, Docs, Sheets, Drive, and universal CLI escape hatch"
+name = "vopak-mcp"
+version = "2.0.0"
+description = "Google Workspace + GCP MCP servers for AI agents — Slides, Docs, Sheets, Drive, Cloud Run, IAM, Storage, Logging, and more"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 

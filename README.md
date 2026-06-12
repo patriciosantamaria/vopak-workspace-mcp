@@ -1,245 +1,364 @@
-# Vopak Workspace MCP
+# Vopak MCP
 
-[![Python Version](https://img.shields.io/badge/python-3.11+-0a2373?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Docker Status](https://img.shields.io/badge/docker-ready-00cfe1?style=for-the-badge&logo=docker&logoColor=0a2373)](https://www.docker.com/)
-[![Tools Count](https://img.shields.io/badge/mcp--tools-39%20total-283ce1?style=for-the-badge&logo=googleworkspace&logoColor=white)](#tool-inventory)
-[![Tests Status](https://img.shields.io/badge/tests-83%20passed-52d400?style=for-the-badge&logo=pytest&logoColor=white)](#development)
-[![License](https://img.shields.io/badge/license-MIT-fc7000?style=for-the-badge)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11+-0a2373?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/docker-ready-00cfe1?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Tools](https://img.shields.io/badge/tools-42-283ce1?style=for-the-badge&logo=gear&logoColor=white)](#complete-tool-catalog)
+[![Tests](https://img.shields.io/badge/tests-passing-34d058?style=for-the-badge&logo=pytest&logoColor=white)](tests/)
+[![License](https://img.shields.io/badge/license-MIT-666666?style=for-the-badge)](LICENSE)
 
-Automate Google Workspace with AI Agents. Connect Slides, Docs, Sheets, and Drive directly to your LLM context via Model Context Protocol (MCP).
+<p align="center">
+  <img src="docs/assets/hero.png" alt="Vopak MCP — Google Workspace + GCP MCP Servers" width="800"/>
+</p>
 
-*We help the world flow forward >*
+<p align="center">
+  <strong>42 MCP tools across 3 servers — Google Workspace + GCP in a single Docker container.</strong><br/>
+  Slides, Docs, Sheets, Drive, Cloud Run, IAM, Storage, Logging, BigQuery, and more.
+</p>
 
-***
+---
 
-![Vopak Workspace MCP Hero](docs/assets/hero.png)
+## What Is This?
 
-## Overview
+**Vopak MCP** is a collection of custom [Model Context Protocol](https://modelcontextprotocol.io/) servers that give AI coding agents full, safe access to Google Workspace and Google Cloud Platform. It runs as a single Docker container and exposes 3 independent MCP servers:
 
-**Vopak Workspace MCP** is a standalone Python-based Model Context Protocol (MCP) server container designed to equip AI coding agents (such as Antigravity, Cursor, and Windsurf) with native, granular capabilities to read, write, format, and audit Google Workspace documents.
+| Server | Tools | Auth | Purpose |
+|:-------|:-----:|:----:|:--------|
+| **`workspace-tools`** | 36 | ADC | Granular Slides, Docs, Sheets, Drive, and branded content tools |
+| **`workspace-cli`** | 3 | OAuth | GWS CLI wrappers for Gmail, Calendar, Tasks, Forms, People |
+| **`gcp-cli`** | 3 | ADC | GCP CLI wrappers for Cloud Run, IAM, Storage, Logging, BigQuery, and more |
 
-By running locally in a single Docker container, it bypasses the need for complex enterprise-level GCP deployments, providing developers and their AI agents with instant access to:
-1. **`workspace-tools` (36 granular tools)**: Deep, structured APIs for Slides, Docs, Sheets, and Drive, including slide design layout generators and document builders.
-2. **`workspace-cli` (3 tools)**: A secure, verb-gated universal CLI wrapper acting as an escape hatch for Gmail, Calendar, Tasks, Forms, and People.
+**You choose what to install.** Each server is independently configurable. Install all 3 for full coverage, or just the ones you need.
 
-***
+---
 
-## System Architecture
-
-The project operates under a hybrid containerized model. The Docker container runs both MCP servers concurrently over standard input/output (stdio), orchestrating API requests via the official Google API Client and executing CLI interactions via a compiled binary of the Google Workspace CLI (`gws`).
-
-```mermaid
-graph TD
-    subgraph Client [AI Environment]
-        Agent["🤖 AI Agent (Cursor / Antigravity)"]
-    end
-
-    subgraph DockerContainer ["🐳 Docker Container (workspace-mcp)"]
-        subgraph Server1 ["workspace-tools (FastMCP)"]
-            SlidesT["Slides Tools (19)"]
-            DocsT["Docs Tools (8)"]
-            SheetsT["Sheets Tools (4)"]
-            DriveT["Drive Tools (2)"]
-            BrandT["Branded Tools (3)"]
-        end
-
-        subgraph Server2 ["workspace-cli (FastMCP)"]
-            CLIWrapper["CLI Wrapper Tools (3)"]
-            GWSCLI["GWS CLI (Rust Bin)"]
-            CLIWrapper --> GWSCLI
-        end
-
-        TokenCache[("🔑 Scoped Credentials Cache (.gws / ADC)")]
-    end
-
-    subgraph GoogleAPIs ["🌐 Google Workspace Cloud"]
-        GoogleSlides["Google Slides API"]
-        GoogleDocs["Google Docs API"]
-        GoogleSheets["Google Sheets API"]
-        GoogleDrive["Google Drive API"]
-        GoogleOther["Complementary APIs (Gmail, Calendar, Tasks, Forms, People)"]
-    end
-
-    Agent -->|JSON-RPC via stdio| Server1
-    Agent -->|JSON-RPC via stdio| Server2
-
-    SlidesT -->|OAuth 2.0| GoogleSlides
-    DocsT -->|OAuth 2.0| GoogleDocs
-    SheetsT -->|OAuth 2.0| GoogleSheets
-    DriveT -->|OAuth 2.0| GoogleDrive
-    BrandT -->|OAuth 2.0| GoogleSlides
-    
-    GWSCLI -->|OAuth 2.0| GoogleOther
-    GWSCLI -.->|Cache Mount| TokenCache
-    SlidesT -.->|Cache Mount| TokenCache
-
-    classDef default fill:#f9f9f9,stroke:#e1e1e1,stroke-width:1px;
-    classDef vopakDeep fill:#0a2373,stroke:#0a2373,stroke-width:2px,color:#ffffff;
-    classDef vopakCyan fill:#00cfe1,stroke:#00cfe1,stroke-width:2px,color:#0a2373;
-    classDef vopakCobalt fill:#283ce1,stroke:#283ce1,stroke-width:2px,color:#ffffff;
-    classDef docker fill:#009ef5,stroke:#009ef5,stroke-width:2px,color:#ffffff;
-    classDef google fill:#ffffff,stroke:#e1e1e1,stroke-width:1px,color:#46555a;
-
-    class Agent vopakCyan;
-    class Server1,Server2 vopakDeep;
-    class DockerContainer docker;
-    class GoogleSlides,GoogleDocs,GoogleSheets,GoogleDrive,GoogleOther google;
-```
-
-***
-
-## Setup Options: Granular Tools vs. CLI-Only
-
-This repository allows you to choose between running **both servers** (recommended for full functionality) or running a **minimal CLI-only setup**. 
-
-| Setup Type | Enabled Servers | Credentials Needed | Best For | Trade-offs |
-| :--- | :--- | :--- | :--- | :--- |
-| **Full Setup** *(Default)* | `workspace-tools` & `workspace-cli` | `gws` OAuth + `gcloud` Application Default Credentials | Precise document manipulation (Slides, Docs, Sheets, Drive) + CLI fallbacks | Requires double authentication step (GWS + gcloud). |
-| **CLI-Only Setup** | `workspace-cli` only | `gws` OAuth only | Lightweight automations (Gmail, Calendar, Tasks, Forms, People) | Agent runs raw CLI commands instead of structured APIs. **Requires CLI Reference Skill.** |
-
-### Running CLI-Only Setup
-If you want to keep your setup lightweight and bypass the Google Cloud SDK (`gcloud`) setup, you can disable `workspace-tools` in your IDE configuration and only authenticate the GWS CLI:
-
-1. In your `mcp_config.json`, remove the `workspace-tools` server block.
-2. Only run the GWS CLI login step during authentication (`docker exec -it workspace-mcp gws auth login`).
-
-> [!WARNING]
-> If you choose the **CLI-Only Setup**, you **MUST** import the [gws_cli_reference SKILL](skills/gws_cli_reference/SKILL.md) into your AI Agent's instructions profile (or copy its contents directly into your system instructions).
-> Because the CLI wrapper is an "escape hatch" with untyped string inputs, AI agents do not natively know the valid syntax parameters for the `gws` tool CLI commands. Improving the Agent's context with this reference skill ensures they can format calls for Gmail, Calendar, Tasks, etc., without syntax errors.
-
-***
-
-## Quick Start Setup
-
-Configure and launch your Vopak Workspace MCP environment in 4 steps:
+## Architecture
 
 ```mermaid
-flowchart TD
-    Start([🚀 Start Setup]) --> Clone[1. Clone Repository]
-    Clone --> Build[2. docker compose up -d --build]
-    Build --> AuthGWS[3. Authenticate GWS CLI]
-    AuthGWS -->|Run login| GWSLogin["docker exec -it workspace-mcp gws auth login"]
-    GWSLogin -->|Browser OAuth Flow| GWSSuccess{GWS Auth Success?}
-    GWSSuccess -->|Yes| AuthADC[4. Authenticate Application Default Credentials]
-    AuthADC -->|Run login| ADCLogin["docker exec -it workspace-mcp gcloud auth application-default login"]
-    ADCLogin -->|Browser OAuth Flow| ADCSuccess{ADC Auth Success?}
-    ADCSuccess -->|Yes| IDEConfig[Link mcp_config.json to IDE]
-    IDEConfig --> Finish([🎉 Agent Ready!])
+graph TB
+    subgraph Agent["AI Agent (Antigravity / Gemini)"]
+        direction LR
+        A1["workspace-tools<br/><small>36 tools</small>"]
+        A2["workspace-cli<br/><small>3 tools</small>"]
+        A3["gcp-cli<br/><small>3 tools</small>"]
+    end
 
-    classDef step fill:#f0f5fa,stroke:#0a2373,stroke-width:1px,color:#0a2373;
-    classDef finish fill:#52d400,stroke:#52d400,stroke-width:2px,color:#ffffff;
-    classDef start fill:#00cfe1,stroke:#00cfe1,stroke-width:2px,color:#0a2373;
-    
-    class Clone,Build,AuthGWS,GWSLogin,AuthADC,ADCLogin,IDEConfig step;
-    class Start start;
-    class Finish finish;
+    subgraph Docker["Docker Container: vopak-mcp"]
+        direction TB
+        S1["workspace_tools.py<br/><small>Slides, Docs, Sheets, Drive, Branded</small>"]
+        S2["workspace_cli.py<br/><small>gws_read / gws_write / gws_destructive</small>"]
+        S3["gcp_cli_server.py<br/><small>gcp_read / gcp_write / gcp_destructive</small>"]
+    end
+
+    subgraph APIs["Google APIs"]
+        direction LR
+        WS["Workspace APIs<br/><small>Slides, Docs, Sheets, Drive</small>"]
+        CLI["GWS CLI<br/><small>Gmail, Calendar, Tasks, Forms</small>"]
+        GCP["GCP CLI<br/><small>gcloud, bq, gsutil</small>"]
+    end
+
+    A1 -->|stdio| S1
+    A2 -->|stdio| S2
+    A3 -->|stdio| S3
+
+    S1 -->|OAuth/ADC| WS
+    S2 -->|OAuth| CLI
+    S3 -->|ADC| GCP
+
+    style Docker fill:#0a2373,stroke:#00cfe1,color:#fff
+    style Agent fill:#1a1a2e,stroke:#283ce1,color:#fff
+    style APIs fill:#16213e,stroke:#00cfe1,color:#fff
 ```
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/patriciosantamaria/vopak-workspace-mcp.git
-cd vopak-workspace-mcp
-```
+---
 
-### 2. Build & Launch Container
-Spawn the background services. The Dockerfile compiles the latest GWS CLI binary and installs Python dependencies:
+## Quick Start
+
+### 1. Clone and Build
+
 ```bash
+git clone https://github.com/patriciosantamaria/vopak-mcp.git
+cd vopak-mcp
 docker compose up -d --build
 ```
 
-### 3. Google Workspace Authentication (One-time Setup)
-Log in to your Google Account. Copy the URL generated by each command into your browser, grant the permissions, and paste the authorization code back:
+### 2. Authenticate
 
-*   **Authenticate GWS CLI** (for Gmail, Calendar, and CLI-based tools):
-    ```bash
-    docker exec -it workspace-mcp gws auth login
-    ```
-*   **Authenticate Python APIs** (for Slides, Docs, Sheets, and Drive):
-    ```bash
-    docker exec -it workspace-mcp gcloud auth application-default login
-    ```
+```bash
+# Google Workspace CLI (OAuth — for workspace-cli server)
+docker exec -it vopak-mcp gws auth setup
 
-### 4. Link Configuration to your IDE
-Copy the content of `mcp_config.example.json` and paste it into your local IDE settings (e.g. Cursor MCP configuration or Antigravity's `mcp_config.json`):
+# GCP (Application Default Credentials — for workspace-tools and gcp-cli)
+docker exec -it vopak-mcp gcloud auth application-default login
+```
+
+### 3. Verify
+
+```bash
+docker exec -it vopak-mcp python -m src.servers.workspace_tools   # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_cli     # Should print server info
+docker exec -it vopak-mcp python -m src.servers.gcp_cli_server    # Should print server info
+```
+
+### 4. Configure Your IDE
+
+Copy the MCP config into your Antigravity (or other MCP client) configuration:
 
 ```json
 {
   "mcpServers": {
     "workspace-tools": {
       "command": "docker",
-      "args": ["exec", "-i", "workspace-mcp", "python", "-m", "src.servers.workspace_tools"],
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_tools"],
       "timeout": 30
     },
     "workspace-cli": {
       "command": "docker",
-      "args": ["exec", "-i", "workspace-mcp", "python", "-m", "src.servers.workspace_cli"],
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_cli"],
       "timeout": 30
+    },
+    "gcp-cli": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.gcp_cli_server"],
+      "timeout": 60
     }
   }
 }
 ```
 
-***
+See [`mcp_config.example.json`](mcp_config.example.json) for the full reference.
 
-## Tool Inventory
+---
 
-### Server 1: `workspace-tools` (36 Granular Tools)
+## Setup Options
 
-Highly optimized, typed Python tools mapping directly to Google APIs.
+Not every project needs all 42 tools. Choose the setup that fits your use case:
 
-| Module | Tools | Primary Focus | Representative Tools |
-| :--- | :---: | :--- | :--- |
-| **Slides** | **19** | Complete lifecycle management of Google Slides | `slides_get_slide_content`, `slides_update_text`, `slides_format_text`, `slides_get_thumbnail`, `slides_audit_deck` |
-| **Docs** | **8** | Precise document creation, parsing, and modification | `docs_get_structure`, `docs_read_text`, `docs_insert_text`, `docs_find_and_replace`, `docs_delete_text` |
-| **Sheets** | **4** | Cell range reads, writes, and readback validation | `sheets_get_structure`, `sheets_read_range`, `sheets_write_from_file`, `sheets_verify_range` |
-| **Drive** | **2** | Directory traversal, search, and file copying | `drive_list_files`, `drive_manage_file` |
-| **Branded** | **3** | Vopak-compliant template builders and health diagnostics | `create_vopak_presentation`, `create_vopak_document`, `docker_health_check` |
+| Setup | Servers | Tools | Best For |
+|:------|:--------|:-----:|:---------|
+| **Full** | `workspace-tools` + `workspace-cli` + `gcp-cli` | 42 | Full-stack projects using Workspace + GCP |
+| **Workspace Only** | `workspace-tools` + `workspace-cli` | 39 | Projects that only use Google Workspace |
+| **Workspace Granular** | `workspace-tools` only | 36 | Slides/Docs/Sheets/Drive automation (no Gmail/Calendar) |
+| **GCP Only** | `gcp-cli` only | 3 | Infrastructure management, Cloud Run, BigQuery |
+| **CLI Only** | `workspace-cli` + `gcp-cli` | 6 | Universal CLI access to both Workspace and GCP |
 
-### Server 2: `workspace-cli` (3 Legacy Escape Hatch Tools)
+---
 
-Provides a universal fallback mechanism to query Workspace APIs that lack granular endpoint mappings.
+## Complete Tool Catalog
 
-| Tool | Permission | Action Scope | Security Rules |
-| :--- | :---: | :--- | :--- |
-| `gws_read` | **Read-only** | Google Gmail, Calendar, Tasks, Forms, People | Block list checks, no command chaining |
-| `gws_write` | **Write** | Create folders, events, forms, draft emails | Prompt explanation & reason tracking |
-| `gws_destructive` | **Destructive** | Delete events, delete files, empty trash | ⚠️ HITL confirmation required |
+### Server 1: `workspace-tools` (36 tools)
 
-***
+Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and branded content creation.
 
-## Security & Scopes
+#### Slides Tools (19)
 
-*   **OAuth 2.0 Scope Separation**: Scopes are configured granularly. Slides, Docs, and Sheets access only target files created by this application, or files explicitly chosen by the user.
-*   **Command Sanitization**: The CLI Wrapper blocks execution of raw bash syntax, pipe redirects (`|`), and command concatenation (`&&`, `;`).
-*   **Human-In-The-Loop (HITL)**: Destructive CLI commands are flagged explicitly with `⚠️ DESTRUCTIVE` inside the tool schemas, forcing the IDE to prompt the user before execution.
-*   **PII Anonymization**: Log outputs are scrubbed of user emails, phone numbers, and directory listing details (replaced with `[REDACTED]`).
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 1 | `slides_get_presentation` | Read | Presentation metadata: slide count, IDs, titles, page dimensions |
+| 2 | `slides_get_slide_content` | Read | All elements from a slide with text, positions, placeholder types |
+| 3 | `slides_get_speaker_notes` | Read | Speaker notes from one or all slides with element IDs |
+| 4 | `slides_get_element_styles` | Read | Per-run font, bold, italic, color, links for all text elements |
+| 5 | `slides_get_comments` | Read | All comments with authors, replies, resolution status |
+| 6 | `slides_search_text` | Read | Full-text search across all slides with context snippets |
+| 7 | `slides_measure_text_bounds` | Read | Estimate text overflow using font-metric heuristics |
+| 8 | `slides_audit_deck` | Read | Batch audit: titles, text, overflow, thumbnails in one call |
+| 9 | `slides_get_thumbnail` | Read | PNG thumbnail URL for visual QA verification |
+| 10 | `slides_update_text` | Write | Replace text in a specific element |
+| 11 | `slides_format_text` | Write | Apply formatting (bold, font, color) to text ranges |
+| 12 | `slides_update_and_format_text` | Write | Replace text and apply formatting in one atomic call |
+| 13 | `slides_duplicate_slide` | Write | Clone a slide at a specified position |
+| 14 | `slides_reorder_slides` | Write | Move slides to new positions |
+| 15 | `slides_update_speaker_notes` | Write | Replace speaker notes on a single slide |
+| 16 | `slides_bulk_update_speaker_notes` | Write | Update speaker notes on multiple slides in one call |
+| 17 | `slides_batch_update` | Write | Raw Slides API batch update (escape hatch) |
+| 18 | `slides_delete_slide` | Destructive | Permanently delete a slide |
+| 19 | `slides_remove_speaker_notes` | Destructive | Clear speaker notes from a slide |
 
-***
+#### Docs Tools (8)
 
-## Development & Testing
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 20 | `docs_get_structure` | Read | Document structure: headings, sections, element tree |
+| 21 | `docs_read_text` | Read | Extract plain text from a document |
+| 22 | `docs_search_text` | Read | Search for text patterns across the document |
+| 23 | `docs_insert_text` | Write | Insert text at a specific position |
+| 24 | `docs_update_style` | Write | Apply formatting to text ranges |
+| 25 | `docs_append_section` | Write | Append a new section with heading and body |
+| 26 | `docs_find_and_replace` | Write | Find and replace text across the document |
+| 27 | `docs_delete_text` | Destructive | Delete text at a specific range |
 
-This project uses Python 3.11 with [FastMCP](https://github.com/jasonjmcghee/fastmcp) for tool generation and [pytest](https://docs.pytest.org/) for unit testing.
+#### Sheets Tools (4)
 
-### Local Installation
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 28 | `sheets_read_range` | Read | Read cell values from a specified range |
+| 29 | `sheets_get_structure` | Read | Sheet names, row/column counts, named ranges |
+| 30 | `sheets_write_from_file` | Write | Bulk write data from JSON to a sheet range |
+| 31 | `sheets_verify_range` | Write | Atomic write + readback verification (cell-by-cell) |
+
+#### Drive Tools (2)
+
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 32 | `drive_list_files` | Read | List files with structured filters (folder, MIME type, name) |
+| 33 | `drive_manage_file` | Write | Create, move, rename, copy, trash, or share Drive files |
+
+#### Branded Content Tools (3)
+
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 34 | `create_vopak_presentation` | Write | Generate pixel-perfect Vopak-branded Google Slides |
+| 35 | `create_vopak_document` | Write | Generate branded Google Docs from Markdown |
+| 36 | `docker_health_check` | Read | Environment, credentials, and dependency verification |
+
+---
+
+### Server 2: `workspace-cli` (3 tools)
+
+Universal CLI wrappers for the [Google Workspace CLI](https://github.com/googleworkspace/cli). Covers Gmail, Calendar, Tasks, Forms, People — anything the granular tools above don't cover.
+
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 37 | `gws_read` | Read | Read-only GWS CLI commands: `list`, `get`, `query`, `export` |
+| 38 | `gws_write` | Write | Write GWS CLI commands: `create`, `update`, `send`. Requires `reason` |
+| 39 | `gws_destructive` | Destructive | Delete GWS CLI commands: `delete`, `trash`. Requires `reason` + HITL |
+
+**How verb-gating works:** The server extracts the verb from each command and blocks misrouted operations at the server level. If you try to run a `delete` command via `gws_read`, the server rejects it before execution.
+
+**When to use:** Use `workspace-cli` for Google Workspace services not covered by the granular `workspace-tools` server (e.g., Gmail, Calendar, Tasks, Forms). If you install only the CLI, consider loading the GWS CLI Reference Skill for command syntax guidance.
+
+---
+
+### Server 3: `gcp-cli` (3 tools)
+
+Universal CLI wrappers for `gcloud`, `bq`, and `gsutil`. Covers Cloud Run, IAM, Secret Manager, Cloud Storage, Cloud Logging, BigQuery, Pub/Sub, Firestore, Compute, and more.
+
+| # | Tool | Type | Description |
+|:-:|:-----|:----:|:------------|
+| 40 | `gcp_read` | Read | Read-only GCP commands: `list`, `describe`, `get`, `show`, `ls`, `cat` |
+| 41 | `gcp_write` | Write | Write GCP commands: `create`, `deploy`, `update`, `enable`, `cp`. Requires `reason` |
+| 42 | `gcp_destructive` | Destructive | Delete GCP commands: `delete`, `rm`, `destroy`. Requires `reason` + HITL |
+
+**Security features:**
+- **Verb-gating:** Server-side verb classification blocks misrouted operations
+- **Shell injection blocking:** Commands are sanitized to block `|`, `&&`, `;`, backticks, `$()`, redirects
+- **JSON enforcement:** `--format=json` is auto-appended for structured output
+- **Audit trail:** Write and destructive tools require a `reason` parameter (min 10 chars)
+
+**Reference skill:** Load [`skills/gcp_cli_reference/SKILL.md`](skills/gcp_cli_reference/SKILL.md) for exact command syntax across 12 GCP services.
+
+---
+
+## Skills
+
+The project includes reference skills that teach agents how to use the CLI tools effectively:
+
+| Skill | File | Purpose |
+|:------|:-----|:--------|
+| **GCP CLI Reference** | [`skills/gcp_cli_reference/SKILL.md`](skills/gcp_cli_reference/SKILL.md) | Command syntax for 12 GCP services: Cloud Run, IAM, Secrets, Storage, Logging, BigQuery, Pub/Sub, Firestore, Compute, APIs, Projects |
+
+---
+
+## Security Model
+
+### Verb-Gated CLI Tools
+
+Both CLI servers (`workspace-cli` and `gcp-cli`) enforce a 3-tier safety model:
+
+```
+READ  ───── Safe. No confirmation needed.
+WRITE ───── Requires reason (audit trail). IDE may prompt.
+DESTRUCTIVE ─ Requires reason + explicit human confirmation (HITL).
+```
+
+The agent cannot bypass this — verb classification happens server-side before the command reaches the CLI.
+
+### Shell Injection Protection (gcp-cli)
+
+All GCP CLI commands are sanitized before execution. The following patterns are blocked:
+
+| Pattern | Example | Status |
+|:--------|:--------|:------:|
+| Pipe | `list \| grep` | Blocked |
+| Command chaining | `list && rm` | Blocked |
+| Semicolons | `list; rm` | Blocked |
+| Backticks | `` `whoami` `` | Blocked |
+| Subshell | `$(command)` | Blocked |
+| Redirects | `> /etc/passwd` | Blocked |
+
+### Scoped Authentication
+
+| Server | Auth Method | Scopes |
+|:-------|:-----------|:-------|
+| `workspace-tools` | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-cli` | GWS CLI OAuth | Full Workspace access via CLI |
+| `gcp-cli` | Application Default Credentials | Full GCP access via CLI |
+
+---
+
+## Development
+
+### Prerequisites
+
+- Python 3.11+
+- Docker and Docker Compose
+
+### Install for Development
+
 ```bash
-# Install package with development dependencies
 pip install -e ".[dev]"
 ```
 
-### Running Tests
-Execute the test suite containing 83 mock API and CLI parser verifications:
+### Run Tests
+
 ```bash
-pytest
+pytest -v
 ```
 
-### Code Formatting & Linting
-Check code quality standards via `ruff`:
+### Lint
+
 ```bash
 ruff check src/ tests/
 ```
 
-***
+### Project Structure
+
+```
+vopak-mcp/
+  src/
+    servers/
+      workspace_tools.py     # Server 1: 36 granular Workspace tools
+      workspace_cli.py       # Server 2: 3 GWS CLI wrappers
+      gcp_cli_server.py      # Server 3: 3 GCP CLI wrappers
+    tools/
+      slides.py              # 19 Slides tools
+      docs.py                # 8 Docs tools
+      sheets.py              # 4 Sheets tools
+      drive.py               # 2 Drive tools
+      branded.py             # 3 Branded content tools
+      cli_wrapper.py         # 3 GWS CLI wrapper tools
+      gcp_cli.py             # 3 GCP CLI wrapper tools
+    shared/
+      common.py              # AgentResult, safe_execute, auth, API factories
+      gws_helpers.py         # GWS verb sets, extraction, query builders
+      gws_runner.py          # GWS CLI async subprocess runner
+      gcp_helpers.py         # GCP verb sets, extraction, sanitization
+      gcp_runner.py          # GCP CLI async subprocess runner
+  skills/
+    gcp_cli_reference/       # GCP CLI command syntax reference
+  tests/
+    test_gcp_helpers.py      # GCP helpers unit tests
+    test_gcp_cli.py          # GCP CLI tool verb-gating tests
+  docs/
+    assets/
+      hero.png               # Hero graphic
+  docker-compose.yml         # Single-container deployment
+  Dockerfile                 # Python + gcloud + gws CLI
+  pyproject.toml             # Project metadata and dependencies
+  mcp_config.example.json    # IDE configuration reference
+```
+
+---
 
 ## License
 
-This project is licensed under the MIT License.
+MIT

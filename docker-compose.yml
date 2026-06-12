@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: workspace-mcp
+    container_name: vopak-mcp
     restart: unless-stopped
     volumes:
       # Persistent named volumes for credentials (survive container rebuilds)
