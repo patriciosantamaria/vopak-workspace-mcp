@@ -1,0 +1,54 @@
+{
+  "template_id": "12b7gAqDWLNK2ooprvLFFOQ4vNiSu69uEQp7m7XeNMho",
+  "master_id": "g3d373374a89_0_385",
+  "layouts": {
+    "TITLE": {
+      "name": "TITLE_1",
+      "bg_type": "white",
+      "bg_description": "Standard corporate title slide.",
+      "content_area": { "x": 40, "y": 150, "width": 880, "height": 300 }
+    },
+    "SECTION_HEADER": {
+      "name": "CUSTOM",
+      "bg_type": "blue_accent",
+      "bg_description": "Section header with Cyan arrow graphic on Deep Blue.",
+      "content_area": { "x": 40, "y": 40, "width": 880, "height": 460 }
+    },
+    "SOLID_BLUE": {
+      "name": "CUSTOM_2",
+      "bg_type": "blue",
+      "bg_description": "Solid Deep Blue wide layout.",
+      "content_area": { "x": 40, "y": 40, "width": 880, "height": 460 }
+    },
+    "SOLID_WHITE": {
+      "name": "CUSTOM_3",
+      "bg_type": "white",
+      "bg_description": "Solid White wide layout.",
+      "content_area": { "x": 40, "y": 40, "width": 880, "height": 460 }
+    },
+    "CONTENT_SPLIT_RIGHT": {
+      "name": "CUSTOM_7",
+      "bg_type": "image_split",
+      "bg_description": "White left, full-height image on right.",
+      "content_area": { "x": 40, "y": 40, "width": 430, "height": 460 }
+    },
+    "CONTENT_SPLIT_LEFT": {
+      "name": "CUSTOM_7_1",
+      "bg_type": "image_split",
+      "bg_description": "Full-height image on left, white right.",
+      "content_area": { "x": 510, "y": 40, "width": 410, "height": 460 }
+    },
+    "SOLID_WHITE_TITLE": {
+      "name": "20_Title and Content",
+      "bg_type": "white",
+      "bg_description": "Clean white with top title area.",
+      "content_area": { "x": 40, "y": 100, "width": 880, "height": 400 }
+    },
+    "TRANSITION": {
+      "name": "CUSTOM_9",
+      "bg_type": "blue",
+      "bg_description": "Solid Deep Blue transition slide.",
+      "content_area": { "x": 40, "y": 40, "width": 880, "height": 460 }
+    }
+  }
+}

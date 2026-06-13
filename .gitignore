@@ -1,43 +1,44 @@
-# Byte-compiled / optimized
-__pycache__/
-*.py[cod]
-*$py.class
+# Go binaries
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 
-# Virtual environments
-.venv/
-venv/
-env/
+# Go test
+*.test
+*.out
+coverage.html
+
+# Go workspace
+go.work
+go.work.sum
 
 # IDE
-.vscode/
 .idea/
+.vscode/
 *.swp
 *.swo
-
-# Distribution
-dist/
-build/
-*.egg-info/
-*.egg
-
-# Docker
-.docker/
-
-# Environment
-.env
-.env.local
+*~
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Credentials (never commit)
-*.json
-!pyproject.toml
-!mcp_config.example.json
-!docker-compose.yml
+# Docker
+.docker/
 
-# Test artifacts
-.pytest_cache/
-htmlcov/
-.coverage
+# Node (for TypeScript skill scripts)
+node_modules/
+package-lock.json
+
+# Environment
+.env
+.env.local
+credentials.json
+service-account.json
+
+# Build
+dist/
+tmp/

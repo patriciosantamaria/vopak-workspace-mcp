@@ -1,19 +1,34 @@
 {
   "mcpServers": {
-    "workspace-tools": {
+    "workspace-slides": {
       "command": "docker",
-      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_tools"],
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "slides"],
       "timeout": 30
     },
-    "workspace-cli": {
+    "workspace-docs": {
       "command": "docker",
-      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_cli"],
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "docs"],
       "timeout": 30
     },
-    "gcp-cli": {
+    "workspace-sheets": {
       "command": "docker",
-      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.gcp_cli_server"],
-      "timeout": 60
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "sheets"],
+      "timeout": 30
+    },
+    "workspace-drive": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "drive"],
+      "timeout": 30
+    },
+    "workspace-branded": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "branded"],
+      "timeout": 30
+    },
+    "workspace-api": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-workspace-mcp", "/app/server", "--server", "api"],
+      "timeout": 30
     }
   }
 }

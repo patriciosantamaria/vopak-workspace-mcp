@@ -1,0 +1,20 @@
+{
+  "name": "vopak-workspace",
+  "version": "2.0.0",
+  "description": "Enterprise Workspace agent skills for creating branded Google Slides, Docs, Sheets, and Drive structures via the vopak-workspace-mcp Go server",
+  "author": {
+    "name": "Vopak Digital"
+  },
+  "repository": "https://github.com/patriciosantamaria/vopak-workspace-mcp",
+  "license": "Apache-2.0",
+  "keywords": [
+    "vopak",
+    "google-workspace",
+    "google-slides",
+    "google-docs",
+    "google-sheets",
+    "branded-content",
+    "mcp",
+    "golang"
+  ]
+}

@@ -1,0 +1,107 @@
+:root {
+  --vopak-blue: #0a2373;
+  --vopak-cyan: #00cfe1;
+  --vopak-white: #ffffff;
+  --vopak-text: #333333;
+  --vopak-gray: #666666;
+  --slide-width: 960px;
+  --slide-height: 540px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+}
+
+.slide {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background: var(--vopak-white);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  border-radius: 4px;
+}
+
+/* Layout: TITLE (Cover) */
+.slide.layout-title {
+  background: linear-gradient(135deg, var(--vopak-blue) 0%, #001a5a 100%);
+  color: var(--vopak-white);
+}
+
+.layout-title .title {
+  position: absolute;
+  left: 43px;
+  top: 373px;
+  width: 385px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.layout-title .subtitle {
+  position: absolute;
+  left: 43px;
+  top: 436px;
+  width: 350px;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--vopak-cyan);
+}
+
+/* Layout: SECTION */
+.slide.layout-section {
+  background: var(--vopak-blue);
+  color: var(--vopak-white);
+}
+
+.layout-section .title {
+  position: absolute;
+  left: 42px;
+  top: 150px;
+  width: 800px;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+/* Layout: STANDARD (Content) */
+.layout-standard .header-cyan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: var(--vopak-cyan);
+}
+
+.layout-standard .title {
+  position: absolute;
+  left: 42px;
+  top: 29px;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--vopak-blue);
+}
+
+.layout-standard .body {
+  position: absolute;
+  left: 42px;
+  top: 100px;
+  width: 876px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--vopak-text);
+}
+
+/* Vopak Logo Placeholder */
+.vopak-logo {
+  position: absolute;
+  right: 42px;
+  bottom: 30px;
+  height: 24px;
+}

@@ -23,11 +23,15 @@
 
 | Server | Tools | Auth | Purpose |
 |:-------|:-----:|:----:|:--------|
-| **`workspace-tools`** | 36 | ADC | Granular Slides, Docs, Sheets, Drive, and branded content tools |
+| **`workspace-slides`** | 19 | ADC | Granular Google Slides tools (reading, writing, formatting) |
+| **`workspace-docs`** | 8 | ADC | Granular Google Docs tools (reading, styling, structure) |
+| **`workspace-sheets`** | 4 | ADC | Granular Google Sheets tools (reading, writing, validation) |
+| **`workspace-drive`** | 2 | ADC | Google Drive file search and lifecycle management |
+| **`workspace-branded`** | 3 | ADC | Branded Vopak Slide/Doc creators and health checks |
 | **`workspace-cli`** | 3 | OAuth | GWS CLI wrappers for Gmail, Calendar, Tasks, Forms, People |
 | **`gcp-cli`** | 3 | ADC | GCP CLI wrappers for Cloud Run, IAM, Storage, Logging, BigQuery, and more |
 
-**You choose what to install.** Each server is independently configurable. Install all 3 for full coverage, or just the ones you need.
+**You choose what to install.** Each server is independently configurable. Install all 7 for full coverage, or just the ones you need.
 
 ---
 
@@ -37,14 +41,14 @@
 graph TB
     subgraph Agent["AI Agent (Antigravity / Gemini)"]
         direction LR
-        A1["workspace-tools<br/><small>36 tools</small>"]
+        A1["Workspace Modular Servers<br/><small>slides / docs / sheets / drive / branded</small>"]
         A2["workspace-cli<br/><small>3 tools</small>"]
         A3["gcp-cli<br/><small>3 tools</small>"]
     end
 
     subgraph Docker["Docker Container: vopak-mcp"]
         direction TB
-        S1["workspace_tools.py<br/><small>Slides, Docs, Sheets, Drive, Branded</small>"]
+        S1["workspace_[slides/docs/sheets/drive/branded].py<br/><small>5 independent server processes</small>"]
         S2["workspace_cli.py<br/><small>gws_read / gws_write / gws_destructive</small>"]
         S3["gcp_cli_server.py<br/><small>gcp_read / gcp_write / gcp_destructive</small>"]
     end
@@ -87,14 +91,18 @@ docker compose up -d --build
 # Google Workspace CLI (OAuth — for workspace-cli server)
 docker exec -it vopak-mcp gws auth setup
 
-# GCP (Application Default Credentials — for workspace-tools and gcp-cli)
+# GCP (Application Default Credentials — for Workspace servers and gcp-cli)
 docker exec -it vopak-mcp gcloud auth application-default login
 ```
 
 ### 3. Verify
 
 ```bash
-docker exec -it vopak-mcp python -m src.servers.workspace_tools   # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_slides  # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_docs    # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_sheets  # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_drive   # Should print server info
+docker exec -it vopak-mcp python -m src.servers.workspace_branded # Should print server info
 docker exec -it vopak-mcp python -m src.servers.workspace_cli     # Should print server info
 docker exec -it vopak-mcp python -m src.servers.gcp_cli_server    # Should print server info
 ```
@@ -106,9 +114,29 @@ Copy the MCP config into your Antigravity (or other MCP client) configuration:
 ```json
 {
   "mcpServers": {
-    "workspace-tools": {
+    "workspace-slides": {
       "command": "docker",
-      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_tools"],
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_slides"],
+      "timeout": 30
+    },
+    "workspace-docs": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_docs"],
+      "timeout": 30
+    },
+    "workspace-sheets": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_sheets"],
+      "timeout": 30
+    },
+    "workspace-drive": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_drive"],
+      "timeout": 30
+    },
+    "workspace-branded": {
+      "command": "docker",
+      "args": ["exec", "-i", "vopak-mcp", "python", "-m", "src.servers.workspace_branded"],
       "timeout": 30
     },
     "workspace-cli": {
@@ -131,13 +159,13 @@ See [`mcp_config.example.json`](mcp_config.example.json) for the full reference.
 
 ## Setup Options
 
-Not every project needs all 42 tools. Choose the setup that fits your use case:
+Not every project needs all 42 tools. You can customize which servers to install:
 
 | Setup | Servers | Tools | Best For |
 |:------|:--------|:-----:|:---------|
-| **Full** | `workspace-tools` + `workspace-cli` + `gcp-cli` | 42 | Full-stack projects using Workspace + GCP |
-| **Workspace Only** | `workspace-tools` + `workspace-cli` | 39 | Projects that only use Google Workspace |
-| **Workspace Granular** | `workspace-tools` only | 36 | Slides/Docs/Sheets/Drive automation (no Gmail/Calendar) |
+| **Full** | All 7 servers | 42 | Full-stack projects using Workspace + GCP |
+| **Workspace Only** | `workspace-slides` + `workspace-docs` + `workspace-sheets` + `workspace-drive` + `workspace-branded` + `workspace-cli` | 39 | Projects that only use Google Workspace |
+| **Workspace Granular** | Choose specific modules (slides, docs, sheets, drive, branded) | 2 - 36 | Precision Workspace tasks (e.g. only slides or only drive) |
 | **GCP Only** | `gcp-cli` only | 3 | Infrastructure management, Cloud Run, BigQuery |
 | **CLI Only** | `workspace-cli` + `gcp-cli` | 6 | Universal CLI access to both Workspace and GCP |
 
@@ -145,9 +173,11 @@ Not every project needs all 42 tools. Choose the setup that fits your use case:
 
 ## Complete Tool Catalog
 
-### Server 1: `workspace-tools` (36 tools)
+The granular Workspace tools are split into 5 focused servers:
 
-Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and branded content creation.
+### Server 1: `workspace-slides` (19 tools)
+
+Granular tools for reading, writing, and formatting Google Slides presentations.
 
 #### Slides Tools (19)
 
@@ -173,6 +203,10 @@ Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and brande
 | 18 | `slides_delete_slide` | Destructive | Permanently delete a slide |
 | 19 | `slides_remove_speaker_notes` | Destructive | Clear speaker notes from a slide |
 
+### Server 2: `workspace-docs` (8 tools)
+
+Granular tools for reading and editing Google Docs structures and styles.
+
 #### Docs Tools (8)
 
 | # | Tool | Type | Description |
@@ -186,6 +220,10 @@ Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and brande
 | 26 | `docs_find_and_replace` | Write | Find and replace text across the document |
 | 27 | `docs_delete_text` | Destructive | Delete text at a specific range |
 
+### Server 3: `workspace-sheets` (4 tools)
+
+Granular tools for reading, writing, and verifying cell ranges in Google Sheets.
+
 #### Sheets Tools (4)
 
 | # | Tool | Type | Description |
@@ -195,12 +233,20 @@ Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and brande
 | 30 | `sheets_write_from_file` | Write | Bulk write data from JSON to a sheet range |
 | 31 | `sheets_verify_range` | Write | Atomic write + readback verification (cell-by-cell) |
 
+### Server 4: `workspace-drive` (2 tools)
+
+Granular tools for file search and lifecycle management in Google Drive.
+
 #### Drive Tools (2)
 
 | # | Tool | Type | Description |
 |:-:|:-----|:----:|:------------|
 | 32 | `drive_list_files` | Read | List files with structured filters (folder, MIME type, name) |
 | 33 | `drive_manage_file` | Write | Create, move, rename, copy, trash, or share Drive files |
+
+### Server 5: `workspace-branded` (3 tools)
+
+Generation of branded Vopak assets and environment health checks.
 
 #### Branded Content Tools (3)
 
@@ -212,7 +258,7 @@ Granular, purpose-built tools for Google Slides, Docs, Sheets, Drive, and brande
 
 ---
 
-### Server 2: `workspace-cli` (3 tools)
+### Server 6: `workspace-cli` (3 tools)
 
 Universal CLI wrappers for the [Google Workspace CLI](https://github.com/googleworkspace/cli). Covers Gmail, Calendar, Tasks, Forms, People — anything the granular tools above don't cover.
 
@@ -224,11 +270,11 @@ Universal CLI wrappers for the [Google Workspace CLI](https://github.com/googlew
 
 **How verb-gating works:** The server extracts the verb from each command and blocks misrouted operations at the server level. If you try to run a `delete` command via `gws_read`, the server rejects it before execution.
 
-**When to use:** Use `workspace-cli` for Google Workspace services not covered by the granular `workspace-tools` server (e.g., Gmail, Calendar, Tasks, Forms). If you install only the CLI, consider loading the GWS CLI Reference Skill for command syntax guidance.
+**When to use:** Use `workspace-cli` for Google Workspace services not covered by the granular workspace servers (e.g., Gmail, Calendar, Tasks, Forms). If you install only the CLI, consider loading the GWS CLI Reference Skill for command syntax guidance.
 
 ---
 
-### Server 3: `gcp-cli` (3 tools)
+### Server 7: `gcp-cli` (3 tools)
 
 Universal CLI wrappers for `gcloud`, `bq`, and `gsutil`. Covers Cloud Run, IAM, Secret Manager, Cloud Storage, Cloud Logging, BigQuery, Pub/Sub, Firestore, Compute, and more.
 
@@ -289,7 +335,11 @@ All GCP CLI commands are sanitized before execution. The following patterns are 
 
 | Server | Auth Method | Scopes |
 |:-------|:-----------|:-------|
-| `workspace-tools` | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-slides` | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-docs`   | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-sheets` | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-drive`  | Application Default Credentials | Per-tool minimum OAuth scopes |
+| `workspace-branded`| Application Default Credentials | Per-tool minimum OAuth scopes |
 | `workspace-cli` | GWS CLI OAuth | Full Workspace access via CLI |
 | `gcp-cli` | Application Default Credentials | Full GCP access via CLI |
 
@@ -326,9 +376,13 @@ ruff check src/ tests/
 vopak-mcp/
   src/
     servers/
-      workspace_tools.py     # Server 1: 36 granular Workspace tools
-      workspace_cli.py       # Server 2: 3 GWS CLI wrappers
-      gcp_cli_server.py      # Server 3: 3 GCP CLI wrappers
+      workspace_slides.py    # Server 1: 19 Slides tools
+      workspace_docs.py      # Server 2: 8 Docs tools
+      workspace_sheets.py    # Server 3: 4 Sheets tools
+      workspace_drive.py     # Server 4: 2 Drive tools
+      workspace_branded.py   # Server 5: 3 Branded + health tools
+      workspace_cli.py       # Server 6: 3 GWS CLI wrappers
+      gcp_cli_server.py      # Server 7: 3 GCP CLI wrappers
     tools/
       slides.py              # 19 Slides tools
       docs.py                # 8 Docs tools

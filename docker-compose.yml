@@ -1,20 +1,20 @@
+# =============================================================================
+# Vopak Workspace MCP Server — Docker Compose
+# =============================================================================
+# Usage:
+#   docker compose up -d --build
+#
+# The container idles and Antigravity invokes tools via:
+#   docker exec -i vopak-workspace-mcp /app/server --server slides
+# =============================================================================
+
 services:
   workspace-mcp:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: vopak-mcp
+    build: .
+    container_name: vopak-workspace-mcp
     restart: unless-stopped
-    volumes:
-      # Persistent named volumes for credentials (survive container rebuilds)
-      - gws_credentials:/root/.config/gws
-      - gcloud_credentials:/root/.config/gcloud
-      # Bind mount host Projects folder for local file uploads (read-only)
-      - ${HOME}/Projects:/projects:ro
     environment:
-      - GOOGLE_WORKSPACE_CLI_KEYRING_BACKEND=file
-      - GWS_BINARY_PATH=/usr/local/bin/gws
-
-volumes:
-  gws_credentials:
-  gcloud_credentials:
+      TEMPLATE_FOLDER_ID: "1DcCliXLB4qp8jOStQKPS4iCJUHPE8Lxm"
+    volumes:
+      # Mount Google Cloud ADC credentials (read-only)
+      - ${HOME}/.config/gcloud:/root/.config/gcloud:ro
