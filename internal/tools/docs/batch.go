@@ -12,8 +12,8 @@ import (
 )
 
 type BatchUpdateArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	Requests   string `json:"requests" jsonschema:"description=JSON array of Docs API request objects"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	Requests   string `json:"requests" jsonschema:"JSON array of Docs API request objects"`
 }
 
 func handleBatchUpdate(clients *workspace.Clients) mcp.ToolHandlerFor[BatchUpdateArgs, any] {

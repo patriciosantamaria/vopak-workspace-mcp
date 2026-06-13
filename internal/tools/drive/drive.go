@@ -12,14 +12,14 @@ import (
 )
 
 type ListArgs struct {
-	Query      string `json:"query" jsonschema:"description=Drive search query (e.g. name contains 'report')"`
-	FolderID   string `json:"folder_id,omitempty" jsonschema:"description=Optional folder ID to scope search"`
-	MaxResults int    `json:"max_results,omitempty" jsonschema:"description=Max results (default 20)"`
+	Query      string `json:"query" jsonschema:"Drive search query (e.g. name contains 'report')"`
+	FolderID   string `json:"folder_id,omitempty" jsonschema:"Optional folder ID to scope search"`
+	MaxResults int    `json:"max_results,omitempty" jsonschema:"Max results (default 20)"`
 }
 
 type CreateFoldersArgs struct {
-	Path           string `json:"path" jsonschema:"description=Folder path to create (e.g. Projects/2025/Q1)"`
-	ParentFolderID string `json:"parent_folder_id" jsonschema:"description=Parent folder ID"`
+	Path           string `json:"path" jsonschema:"Folder path to create (e.g. Projects/2025/Q1)"`
+	ParentFolderID string `json:"parent_folder_id" jsonschema:"Parent folder ID"`
 }
 
 func handleList(clients *workspace.Clients) mcp.ToolHandlerFor[ListArgs, any] {

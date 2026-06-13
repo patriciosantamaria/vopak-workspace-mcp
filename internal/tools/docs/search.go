@@ -11,9 +11,9 @@ import (
 )
 
 type SearchTextArgs struct {
-	DocumentID    string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	Query         string `json:"query" jsonschema:"description=Text to search for"`
-	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"description=Case-sensitive search (default false)"`
+	DocumentID    string `json:"document_id" jsonschema:"Google Doc ID"`
+	Query         string `json:"query" jsonschema:"Text to search for"`
+	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"Case-sensitive search (default false)"`
 }
 
 func handleSearchText(clients *workspace.Clients) mcp.ToolHandlerFor[SearchTextArgs, any] {

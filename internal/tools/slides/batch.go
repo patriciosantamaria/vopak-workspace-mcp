@@ -17,8 +17,8 @@ import (
 
 // DeleteArgs are the arguments for the slides_delete tool.
 type DeleteArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	SlideObjectID  string `json:"slide_object_id" jsonschema:"description=The object ID of the slide to delete"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	SlideObjectID  string `json:"slide_object_id" jsonschema:"The object ID of the slide to delete"`
 }
 
 func handleDelete(clients *workspace.Clients) mcp.ToolHandlerFor[DeleteArgs, any] {
@@ -62,8 +62,8 @@ func handleDelete(clients *workspace.Clients) mcp.ToolHandlerFor[DeleteArgs, any
 
 // BatchUpdateArgs are the arguments for the slides_batch_update escape hatch tool.
 type BatchUpdateArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	Requests       string `json:"requests" jsonschema:"description=Raw JSON array of Slides API request objects"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	Requests       string `json:"requests" jsonschema:"Raw JSON array of Slides API request objects"`
 }
 
 func handleBatchUpdate(clients *workspace.Clients) mcp.ToolHandlerFor[BatchUpdateArgs, any] {

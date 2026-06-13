@@ -19,9 +19,9 @@ import (
 
 // SearchTextArgs defines the input for the slides_search_text tool.
 type SearchTextArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
-	Query          string `json:"query"            jsonschema:"description=The text string to search for across all slides"`
-	CaseSensitive  bool   `json:"case_sensitive"   jsonschema:"description=If true the search is case-sensitive. Default false"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
+	Query          string `json:"query"            jsonschema:"The text string to search for across all slides"`
+	CaseSensitive  bool   `json:"case_sensitive"   jsonschema:"If true the search is case-sensitive. Default false"`
 }
 
 // SearchMatch represents a single occurrence of the query text.
@@ -164,7 +164,7 @@ func searchPageElements(elements []*slidesapi.PageElement, slideIdx int, query s
 
 // ListArgs defines the input for the slides_list tool.
 type ListArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
 }
 
 // SlideInfo contains summary metadata for a single slide.

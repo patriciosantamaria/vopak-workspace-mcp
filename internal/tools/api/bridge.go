@@ -38,18 +38,18 @@ const apiBase = "https://www.googleapis.com/"
 // --- Arg structs ---
 
 type ReadArgs struct {
-	Endpoint    string            `json:"endpoint" jsonschema:"description=API path (e.g. gmail/v1/users/me/messages)"`
-	QueryParams map[string]string `json:"query_params,omitempty" jsonschema:"description=Optional query parameters"`
+	Endpoint    string            `json:"endpoint" jsonschema:"API path (e.g. gmail/v1/users/me/messages)"`
+	QueryParams map[string]string `json:"query_params,omitempty" jsonschema:"Optional query parameters"`
 }
 
 type WriteArgs struct {
-	Endpoint string `json:"endpoint" jsonschema:"description=API path"`
-	Method   string `json:"method,omitempty" jsonschema:"description=HTTP method (POST PUT PATCH). Default: POST"`
-	Body     string `json:"body,omitempty" jsonschema:"description=JSON request body"`
+	Endpoint string `json:"endpoint" jsonschema:"API path"`
+	Method   string `json:"method,omitempty" jsonschema:"HTTP method (POST PUT PATCH). Default: POST"`
+	Body     string `json:"body,omitempty" jsonschema:"JSON request body"`
 }
 
 type DeleteArgs struct {
-	Endpoint string `json:"endpoint" jsonschema:"description=API path for DELETE request"`
+	Endpoint string `json:"endpoint" jsonschema:"API path for DELETE request"`
 }
 
 // --- Handlers ---

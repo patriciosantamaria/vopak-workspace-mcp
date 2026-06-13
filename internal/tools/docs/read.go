@@ -11,13 +11,13 @@ import (
 )
 
 type ReadTextArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	StartIndex int    `json:"start_index,omitempty" jsonschema:"description=Start character index (0 = beginning)"`
-	EndIndex   int    `json:"end_index,omitempty" jsonschema:"description=End character index (0 = entire doc)"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	StartIndex int    `json:"start_index,omitempty" jsonschema:"Start character index (0 = beginning)"`
+	EndIndex   int    `json:"end_index,omitempty" jsonschema:"End character index (0 = entire doc)"`
 }
 
 type GetStructureArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
 }
 
 func handleReadText(clients *workspace.Clients) mcp.ToolHandlerFor[ReadTextArgs, any] {

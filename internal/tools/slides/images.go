@@ -12,14 +12,14 @@ import (
 
 // InsertImageArgs are the arguments for the slides_insert_image tool.
 type InsertImageArgs struct {
-	PresentationID   string `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	SlideObjectID    string `json:"slide_object_id" jsonschema:"description=The object ID of the slide to insert the image into"`
-	ImageURL         string `json:"image_url" jsonschema:"description=Publicly accessible URL of the image to insert"`
-	Width            int64  `json:"width,omitempty" jsonschema:"description=Width in EMU (1 px = 9525 EMU). Optional"`
-	Height           int64  `json:"height,omitempty" jsonschema:"description=Height in EMU (1 px = 9525 EMU). Optional"`
-	TranslateX       int64  `json:"translate_x,omitempty" jsonschema:"description=Horizontal position offset in EMU. Optional"`
-	TranslateY       int64  `json:"translate_y,omitempty" jsonschema:"description=Vertical position offset in EMU. Optional"`
-	ReplaceElementID string `json:"replace_element_id,omitempty" jsonschema:"description=If set, delete this element and insert the image in its place"`
+	PresentationID   string `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	SlideObjectID    string `json:"slide_object_id" jsonschema:"The object ID of the slide to insert the image into"`
+	ImageURL         string `json:"image_url" jsonschema:"Publicly accessible URL of the image to insert"`
+	Width            int64  `json:"width,omitempty" jsonschema:"Width in EMU (1 px = 9525 EMU). Optional"`
+	Height           int64  `json:"height,omitempty" jsonschema:"Height in EMU (1 px = 9525 EMU). Optional"`
+	TranslateX       int64  `json:"translate_x,omitempty" jsonschema:"Horizontal position offset in EMU. Optional"`
+	TranslateY       int64  `json:"translate_y,omitempty" jsonschema:"Vertical position offset in EMU. Optional"`
+	ReplaceElementID string `json:"replace_element_id,omitempty" jsonschema:"If set, delete this element and insert the image in its place"`
 }
 
 func handleInsertImage(clients *workspace.Clients) mcp.ToolHandlerFor[InsertImageArgs, any] {

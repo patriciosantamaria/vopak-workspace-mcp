@@ -19,9 +19,9 @@ import (
 
 // ReadTableArgs defines the input for the slides_read_table tool.
 type ReadTableArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
-	SlideIndex     int    `json:"slide_index"      jsonschema:"description=Zero-based index of the slide containing the table"`
-	TableIndex     int    `json:"table_index"       jsonschema:"description=Zero-based index of the table on the slide (use 0 for the first table)"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
+	SlideIndex     int    `json:"slide_index"      jsonschema:"Zero-based index of the slide containing the table"`
+	TableIndex     int    `json:"table_index"       jsonschema:"Zero-based index of the table on the slide (use 0 for the first table)"`
 }
 
 
@@ -149,11 +149,11 @@ func extractCellText(cell *slidesapi.TableCell) string {
 
 // UpdateCellArgs defines the input for the slides_update_cell tool.
 type UpdateCellArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
-	TableID        string `json:"table_id"         jsonschema:"description=The object ID of the table element on the slide"`
-	RowIndex       int    `json:"row_index"         jsonschema:"description=Zero-based row index of the cell to update"`
-	ColIndex       int    `json:"col_index"         jsonschema:"description=Zero-based column index of the cell to update"`
-	Text           string `json:"text"              jsonschema:"description=The new text content for the cell"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
+	TableID        string `json:"table_id"         jsonschema:"The object ID of the table element on the slide"`
+	RowIndex       int    `json:"row_index"         jsonschema:"Zero-based row index of the cell to update"`
+	ColIndex       int    `json:"col_index"         jsonschema:"Zero-based column index of the cell to update"`
+	Text           string `json:"text"              jsonschema:"The new text content for the cell"`
 }
 
 // UpdateCellResult confirms the cell update.

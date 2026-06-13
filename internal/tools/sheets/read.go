@@ -12,18 +12,18 @@ import (
 // --- Arg structs ---
 
 type ReadRangeArgs struct {
-	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"description=Google Spreadsheet ID"`
-	Range         string `json:"range" jsonschema:"description=A1 notation range (e.g. Sheet1!A1:D10)"`
+	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"Google Spreadsheet ID"`
+	Range         string `json:"range" jsonschema:"A1 notation range (e.g. Sheet1!A1:D10)"`
 }
 
 type GetStructureArgs struct {
-	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"description=Google Spreadsheet ID"`
+	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"Google Spreadsheet ID"`
 }
 
 type VerifyRangeArgs struct {
-	SpreadsheetID  string     `json:"spreadsheet_id" jsonschema:"description=Google Spreadsheet ID"`
-	Range          string     `json:"range" jsonschema:"description=A1 notation range to verify"`
-	ExpectedValues [][]string `json:"expected_values,omitempty" jsonschema:"description=Optional expected cell values for comparison"`
+	SpreadsheetID  string     `json:"spreadsheet_id" jsonschema:"Google Spreadsheet ID"`
+	Range          string     `json:"range" jsonschema:"A1 notation range to verify"`
+	ExpectedValues [][]string `json:"expected_values,omitempty" jsonschema:"Optional expected cell values for comparison"`
 }
 
 // --- Handlers ---

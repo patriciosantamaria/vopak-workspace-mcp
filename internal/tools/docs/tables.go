@@ -12,30 +12,30 @@ import (
 )
 
 type ReadTableArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	TableIndex int    `json:"table_index" jsonschema:"description=Which table (0-based index)"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	TableIndex int    `json:"table_index" jsonschema:"Which table (0-based index)"`
 }
 
 type UpdateCellArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	TableIndex int    `json:"table_index" jsonschema:"description=Which table (0-based)"`
-	RowIndex   int    `json:"row_index" jsonschema:"description=Row index (0-based)"`
-	ColIndex   int    `json:"col_index" jsonschema:"description=Column index (0-based)"`
-	Text       string `json:"text" jsonschema:"description=New cell text"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	TableIndex int    `json:"table_index" jsonschema:"Which table (0-based)"`
+	RowIndex   int    `json:"row_index" jsonschema:"Row index (0-based)"`
+	ColIndex   int    `json:"col_index" jsonschema:"Column index (0-based)"`
+	Text       string `json:"text" jsonschema:"New cell text"`
 }
 
 type AddTableRowArgs struct {
-	DocumentID string   `json:"document_id" jsonschema:"description=Google Doc ID"`
-	TableIndex int      `json:"table_index" jsonschema:"description=Which table (0-based)"`
-	RowIndex   int      `json:"row_index,omitempty" jsonschema:"description=Row to insert at (-1 = append)"`
-	Values     []string `json:"values" jsonschema:"description=Cell values for the new row"`
+	DocumentID string   `json:"document_id" jsonschema:"Google Doc ID"`
+	TableIndex int      `json:"table_index" jsonschema:"Which table (0-based)"`
+	RowIndex   int      `json:"row_index,omitempty" jsonschema:"Row to insert at (-1 = append)"`
+	Values     []string `json:"values" jsonschema:"Cell values for the new row"`
 }
 
 type InsertTableArgs struct {
-	DocumentID  string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	Rows        int    `json:"rows" jsonschema:"description=Number of rows"`
-	Columns     int    `json:"columns" jsonschema:"description=Number of columns"`
-	InsertIndex int    `json:"insert_index" jsonschema:"description=Character index for table insertion"`
+	DocumentID  string `json:"document_id" jsonschema:"Google Doc ID"`
+	Rows        int    `json:"rows" jsonschema:"Number of rows"`
+	Columns     int    `json:"columns" jsonschema:"Number of columns"`
+	InsertIndex int    `json:"insert_index" jsonschema:"Character index for table insertion"`
 }
 
 // findTables returns all table elements from a doc body.

@@ -12,17 +12,17 @@ import (
 )
 
 type WriteDataArgs struct {
-	SpreadsheetID string          `json:"spreadsheet_id" jsonschema:"description=Google Spreadsheet ID"`
-	Range         string          `json:"range" jsonschema:"description=A1 notation target range"`
-	Values        [][]interface{} `json:"values" jsonschema:"description=2D array of values to write"`
+	SpreadsheetID string          `json:"spreadsheet_id" jsonschema:"Google Spreadsheet ID"`
+	Range         string          `json:"range" jsonschema:"A1 notation target range"`
+	Values        [][]interface{} `json:"values" jsonschema:"2D array of values to write"`
 }
 
 type CreateChartArgs struct {
-	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"description=Google Spreadsheet ID"`
-	SheetID       int64  `json:"sheet_id" jsonschema:"description=Sheet ID (tab) to create the chart on"`
-	ChartType     string `json:"chart_type" jsonschema:"description=Chart type: BAR LINE PIE COLUMN AREA"`
-	DataRange     string `json:"data_range" jsonschema:"description=A1 notation range containing chart data"`
-	Title         string `json:"title,omitempty" jsonschema:"description=Optional chart title"`
+	SpreadsheetID string `json:"spreadsheet_id" jsonschema:"Google Spreadsheet ID"`
+	SheetID       int64  `json:"sheet_id" jsonschema:"Sheet ID (tab) to create the chart on"`
+	ChartType     string `json:"chart_type" jsonschema:"Chart type: BAR LINE PIE COLUMN AREA"`
+	DataRange     string `json:"data_range" jsonschema:"A1 notation range containing chart data"`
+	Title         string `json:"title,omitempty" jsonschema:"Optional chart title"`
 }
 
 func handleWriteData(clients *workspace.Clients) mcp.ToolHandlerFor[WriteDataArgs, any] {

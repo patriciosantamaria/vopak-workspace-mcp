@@ -16,9 +16,9 @@ import (
 
 // AddArgs are the arguments for the slides_add tool.
 type AddArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the presentation to add a slide to"`
-	Layout         string `json:"layout,omitempty" jsonschema:"description=Predefined layout name (e.g. BLANK, TITLE_AND_BODY). Defaults to BLANK"`
-	InsertionIndex int    `json:"insertion_index,omitempty" jsonschema:"description=0-based index where the slide should be inserted. -1 or omitted to append at the end"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the presentation to add a slide to"`
+	Layout         string `json:"layout,omitempty" jsonschema:"Predefined layout name (e.g. BLANK, TITLE_AND_BODY). Defaults to BLANK"`
+	InsertionIndex int    `json:"insertion_index,omitempty" jsonschema:"0-based index where the slide should be inserted. -1 or omitted to append at the end"`
 }
 
 func handleAdd(clients *workspace.Clients) mcp.ToolHandlerFor[AddArgs, any] {
@@ -82,8 +82,8 @@ func handleAdd(clients *workspace.Clients) mcp.ToolHandlerFor[AddArgs, any] {
 
 // DuplicateArgs are the arguments for the slides_duplicate tool.
 type DuplicateArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	SlideObjectID  string `json:"slide_object_id" jsonschema:"description=The object ID of the slide to duplicate"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	SlideObjectID  string `json:"slide_object_id" jsonschema:"The object ID of the slide to duplicate"`
 }
 
 func handleDuplicate(clients *workspace.Clients) mcp.ToolHandlerFor[DuplicateArgs, any] {
@@ -135,9 +135,9 @@ func handleDuplicate(clients *workspace.Clients) mcp.ToolHandlerFor[DuplicateArg
 
 // ReorderArgs are the arguments for the slides_reorder tool.
 type ReorderArgs struct {
-	PresentationID string   `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	SlideObjectIDs []string `json:"slide_object_ids" jsonschema:"description=Ordered list of slide object IDs to move"`
-	InsertionIndex int      `json:"insertion_index" jsonschema:"description=0-based target position for the moved slides"`
+	PresentationID string   `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	SlideObjectIDs []string `json:"slide_object_ids" jsonschema:"Ordered list of slide object IDs to move"`
+	InsertionIndex int      `json:"insertion_index" jsonschema:"0-based target position for the moved slides"`
 }
 
 func handleReorder(clients *workspace.Clients) mcp.ToolHandlerFor[ReorderArgs, any] {
@@ -184,19 +184,19 @@ func handleReorder(clients *workspace.Clients) mcp.ToolHandlerFor[ReorderArgs, a
 
 // Replacement defines a single find-and-replace pair.
 type Replacement struct {
-	Find          string `json:"find" jsonschema:"description=The text to search for"`
-	Replace       string `json:"replace" jsonschema:"description=The replacement text"`
-	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"description=Whether the match is case-sensitive. Defaults to false"`
+	Find          string `json:"find" jsonschema:"The text to search for"`
+	Replace       string `json:"replace" jsonschema:"The replacement text"`
+	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"Whether the match is case-sensitive. Defaults to false"`
 }
 
 // ReplaceTextArgs are the arguments for the slides_replace_text tool.
 // Supports both a single replacement (Find/Replace fields) and bulk mode (Replacements array).
 type ReplaceTextArgs struct {
-	PresentationID string        `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	Find           string        `json:"find,omitempty" jsonschema:"description=Text to search for (single replacement mode)"`
-	Replace        string        `json:"replace,omitempty" jsonschema:"description=Replacement text (single replacement mode)"`
-	CaseSensitive  bool          `json:"case_sensitive,omitempty" jsonschema:"description=Case sensitivity for single replacement mode"`
-	Replacements   []Replacement `json:"replacements,omitempty" jsonschema:"description=Array of {find, replace, case_sensitive} pairs for bulk replacement"`
+	PresentationID string        `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	Find           string        `json:"find,omitempty" jsonschema:"Text to search for (single replacement mode)"`
+	Replace        string        `json:"replace,omitempty" jsonschema:"Replacement text (single replacement mode)"`
+	CaseSensitive  bool          `json:"case_sensitive,omitempty" jsonschema:"Case sensitivity for single replacement mode"`
+	Replacements   []Replacement `json:"replacements,omitempty" jsonschema:"Array of {find, replace, case_sensitive} pairs for bulk replacement"`
 }
 
 func handleReplaceText(clients *workspace.Clients) mcp.ToolHandlerFor[ReplaceTextArgs, any] {

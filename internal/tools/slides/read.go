@@ -19,9 +19,9 @@ import (
 
 // GetContentArgs defines the input for the slides_get_content tool.
 type GetContentArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
-	SlideIndex     int    `json:"slide_index"      jsonschema:"description=Zero-based index of the slide to read"`
-	IncludeStyles  bool   `json:"include_styles"   jsonschema:"description=If true return font/color/size metadata for each text run. Default false"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
+	SlideIndex     int    `json:"slide_index"      jsonschema:"Zero-based index of the slide to read"`
+	IncludeStyles  bool   `json:"include_styles"   jsonschema:"If true return font/color/size metadata for each text run. Default false"`
 }
 
 // TextRunContent represents a single text run extracted from a slide element.
@@ -201,8 +201,8 @@ func elementType(pe *slidesapi.PageElement) string {
 
 // GetThumbnailArgs defines the input for the slides_get_thumbnail tool.
 type GetThumbnailArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the Google Slides presentation"`
-	SlideIndex     int    `json:"slide_index"      jsonschema:"description=Zero-based index of the slide to get a thumbnail for"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the Google Slides presentation"`
+	SlideIndex     int    `json:"slide_index"      jsonschema:"Zero-based index of the slide to get a thumbnail for"`
 }
 
 // ThumbnailResult holds the thumbnail URL returned by the API.

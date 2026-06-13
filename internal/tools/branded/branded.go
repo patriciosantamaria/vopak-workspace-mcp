@@ -17,20 +17,20 @@ import (
 // --- Arg structs ---
 
 type CreatePresentationArgs struct {
-	TemplateKey string `json:"template_key,omitempty" jsonschema:"description=Template key (default: slides_corporate)"`
-	Title       string `json:"title" jsonschema:"description=Presentation title"`
-	Subtitle    string `json:"subtitle,omitempty" jsonschema:"description=Subtitle text"`
-	Date        string `json:"date,omitempty" jsonschema:"description=Date string (default: today)"`
-	FolderID    string `json:"folder_id,omitempty" jsonschema:"description=Target Drive folder ID"`
+	TemplateKey string `json:"template_key,omitempty" jsonschema:"Template key (default: slides_corporate)"`
+	Title       string `json:"title" jsonschema:"Presentation title"`
+	Subtitle    string `json:"subtitle,omitempty" jsonschema:"Subtitle text"`
+	Date        string `json:"date,omitempty" jsonschema:"Date string (default: today)"`
+	FolderID    string `json:"folder_id,omitempty" jsonschema:"Target Drive folder ID"`
 }
 
 type CreateDocumentArgs struct {
-	TemplateKey  string `json:"template_key" jsonschema:"description=Template key (e.g. doc_add doc_guideline doc_policy)"`
-	Title        string `json:"title" jsonschema:"description=Document title"`
-	DocumentName string `json:"document_name,omitempty" jsonschema:"description=MyDocs document name"`
-	MyDocsNumber string `json:"mydocs_number,omitempty" jsonschema:"description=MyDocs reference number"`
-	Author       string `json:"author,omitempty" jsonschema:"description=Author name"`
-	FolderID     string `json:"folder_id,omitempty" jsonschema:"description=Target Drive folder ID"`
+	TemplateKey  string `json:"template_key" jsonschema:"Template key (e.g. doc_add doc_guideline doc_policy)"`
+	Title        string `json:"title" jsonschema:"Document title"`
+	DocumentName string `json:"document_name,omitempty" jsonschema:"MyDocs document name"`
+	MyDocsNumber string `json:"mydocs_number,omitempty" jsonschema:"MyDocs reference number"`
+	Author       string `json:"author,omitempty" jsonschema:"Author name"`
+	FolderID     string `json:"folder_id,omitempty" jsonschema:"Target Drive folder ID"`
 }
 
 type HealthCheckArgs struct{}

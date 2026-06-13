@@ -12,14 +12,14 @@ import (
 
 // InsertChartArgs are the arguments for the slides_insert_chart tool.
 type InsertChartArgs struct {
-	PresentationID string `json:"presentation_id" jsonschema:"description=The ID of the presentation"`
-	SlideObjectID  string `json:"slide_object_id" jsonschema:"description=The object ID of the slide to insert the chart into"`
-	ChartType      string `json:"chart_type" jsonschema:"description=Type of chart: bar, line, pie, doughnut, or radar"`
-	ChartConfig    string `json:"chart_config" jsonschema:"description=Chart.js configuration as a JSON string"`
-	Width          int64  `json:"width,omitempty" jsonschema:"description=Width in EMU (1 px = 9525 EMU). Optional"`
-	Height         int64  `json:"height,omitempty" jsonschema:"description=Height in EMU (1 px = 9525 EMU). Optional"`
-	TranslateX     int64  `json:"translate_x,omitempty" jsonschema:"description=Horizontal position offset in EMU. Optional"`
-	TranslateY     int64  `json:"translate_y,omitempty" jsonschema:"description=Vertical position offset in EMU. Optional"`
+	PresentationID string `json:"presentation_id" jsonschema:"The ID of the presentation"`
+	SlideObjectID  string `json:"slide_object_id" jsonschema:"The object ID of the slide to insert the chart into"`
+	ChartType      string `json:"chart_type" jsonschema:"Type of chart: bar, line, pie, doughnut, or radar"`
+	ChartConfig    string `json:"chart_config" jsonschema:"Chart.js configuration as a JSON string"`
+	Width          int64  `json:"width,omitempty" jsonschema:"Width in EMU (1 px = 9525 EMU). Optional"`
+	Height         int64  `json:"height,omitempty" jsonschema:"Height in EMU (1 px = 9525 EMU). Optional"`
+	TranslateX     int64  `json:"translate_x,omitempty" jsonschema:"Horizontal position offset in EMU. Optional"`
+	TranslateY     int64  `json:"translate_y,omitempty" jsonschema:"Vertical position offset in EMU. Optional"`
 }
 
 // validChartTypes lists the allowed chart type values.

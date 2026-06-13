@@ -13,35 +13,35 @@ import (
 )
 
 type InsertTextArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	Text       string `json:"text" jsonschema:"description=Text to insert"`
-	Index      int    `json:"index" jsonschema:"description=Character index for insertion"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	Text       string `json:"text" jsonschema:"Text to insert"`
+	Index      int    `json:"index" jsonschema:"Character index for insertion"`
 }
 
 type ReplaceTextArgs struct {
-	DocumentID    string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	Find          string `json:"find" jsonschema:"description=Text to find"`
-	Replace       string `json:"replace" jsonschema:"description=Replacement text"`
-	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"description=Case-sensitive matching"`
+	DocumentID    string `json:"document_id" jsonschema:"Google Doc ID"`
+	Find          string `json:"find" jsonschema:"Text to find"`
+	Replace       string `json:"replace" jsonschema:"Replacement text"`
+	CaseSensitive bool   `json:"case_sensitive,omitempty" jsonschema:"Case-sensitive matching"`
 }
 
 type SetStyleArgs struct {
-	DocumentID string   `json:"document_id" jsonschema:"description=Google Doc ID"`
-	StartIndex int      `json:"start_index" jsonschema:"description=Start of range"`
-	EndIndex   int      `json:"end_index" jsonschema:"description=End of range"`
-	FontFamily string   `json:"font_family,omitempty" jsonschema:"description=Font family (e.g. Inter)"`
-	FontSize   float64  `json:"font_size,omitempty" jsonschema:"description=Font size in pt"`
-	Bold       *bool    `json:"bold,omitempty" jsonschema:"description=Bold formatting"`
-	Italic     *bool    `json:"italic,omitempty" jsonschema:"description=Italic formatting"`
-	Underline  *bool    `json:"underline,omitempty" jsonschema:"description=Underline formatting"`
-	FgColor    string   `json:"fg_color,omitempty" jsonschema:"description=Foreground color as hex (e.g. #0a2373)"`
-	BgColor    string   `json:"bg_color,omitempty" jsonschema:"description=Background color as hex"`
+	DocumentID string   `json:"document_id" jsonschema:"Google Doc ID"`
+	StartIndex int      `json:"start_index" jsonschema:"Start of range"`
+	EndIndex   int      `json:"end_index" jsonschema:"End of range"`
+	FontFamily string   `json:"font_family,omitempty" jsonschema:"Font family (e.g. Inter)"`
+	FontSize   float64  `json:"font_size,omitempty" jsonschema:"Font size in pt"`
+	Bold       *bool    `json:"bold,omitempty" jsonschema:"Bold formatting"`
+	Italic     *bool    `json:"italic,omitempty" jsonschema:"Italic formatting"`
+	Underline  *bool    `json:"underline,omitempty" jsonschema:"Underline formatting"`
+	FgColor    string   `json:"fg_color,omitempty" jsonschema:"Foreground color as hex (e.g. #0a2373)"`
+	BgColor    string   `json:"bg_color,omitempty" jsonschema:"Background color as hex"`
 }
 
 type InsertImageArgs struct {
-	DocumentID string `json:"document_id" jsonschema:"description=Google Doc ID"`
-	ImageURL   string `json:"image_url" jsonschema:"description=Publicly accessible image URL"`
-	Index      int    `json:"index" jsonschema:"description=Character index for insertion"`
+	DocumentID string `json:"document_id" jsonschema:"Google Doc ID"`
+	ImageURL   string `json:"image_url" jsonschema:"Publicly accessible image URL"`
+	Index      int    `json:"index" jsonschema:"Character index for insertion"`
 }
 
 func handleInsertText(clients *workspace.Clients) mcp.ToolHandlerFor[InsertTextArgs, any] {
