@@ -16,5 +16,48 @@
     "branded-content",
     "mcp",
     "golang"
-  ]
+  ],
+  "skills": {
+    "tool_guard": {
+      "path": "skills/tool_guard",
+      "description": "ALWAYS ACTIVE — Routes to granular tools first, API bridge as fallback",
+      "autoload": true
+    },
+    "content_editor": {
+      "path": "skills/content_editor",
+      "description": "Edit existing Slides, Docs, and Sheets using prebuilt MCP tools"
+    },
+    "slide_designer": {
+      "path": "skills/slide_designer",
+      "description": "Design branded Vopak presentations with HTML-first approach"
+    },
+    "doc_creator": {
+      "path": "skills/doc_creator",
+      "description": "Create branded Google Docs from Markdown content"
+    },
+    "template_picker": {
+      "path": "skills/template_picker",
+      "description": "Select the correct template from the 17-template registry"
+    },
+    "layout_planner": {
+      "path": "skills/layout_planner",
+      "description": "Plan visual variety for multi-slide presentations"
+    },
+    "chart_builder": {
+      "path": "skills/chart_builder",
+      "description": "Create data-driven charts with Vopak brand colors"
+    },
+    "brand_checker": {
+      "path": "skills/brand_checker",
+      "description": "Post-generation brand compliance verification and auto-fix"
+    },
+    "api_reference": {
+      "path": "skills/api_reference",
+      "description": "Syntax reference for api_read, api_write, api_delete bridge tools"
+    },
+    "setup_guide": {
+      "path": "skills/setup_guide",
+      "description": "Docker install and configuration guide for first-time setup"
+    }
+  }
 }
