@@ -6,7 +6,6 @@
 | **Version** | 2.0.0 |
 | **Date** | June 2026 |
 | **Status** | Draft — Pending Review |
-| **Supersedes** | vopak-mcp v1.x (Python/FastMCP) |
 
 ---
 
@@ -45,7 +44,7 @@ For dynamic content (charts, data visualizations), transparent shapes with Alt-T
 
 ### 2.3 Decoupled Skills as Code
 
-Agent reasoning instructions are stored as version-controlled `SKILL.md` Markdown files in the `plugin/skills/` directory, completely decoupled from the Go binary. Skills are loaded by Antigravity at session start — no server restart required when updating agent instructions.
+Agent reasoning instructions are stored as version-controlled `SKILL.md` Markdown files in the `vopak-global-skills` repository, completely decoupled from the Go binary. Skills are loaded by Antigravity at session start — no server restart required when updating agent instructions.
 
 ### 2.4 Controlled Concurrency
 
@@ -103,7 +102,6 @@ graph TD
 | Rate limiting middleware | `golang.org/x/time/rate` |
 | BatchUpdate aggregator | Go channels + `errgroup` |
 | Docker container | Multi-stage Alpine (~22MB) |
-| Agent skills (10 — see Section 8) | Markdown SKILL.md files |
 
 ---
 
@@ -258,40 +256,4 @@ The same Go binary deploys to **Google Cloud Run** with Streamable HTTP transpor
 
 ---
 
-## 8. Plugin Architecture
 
-The project ships an Antigravity plugin (`plugin/`) alongside the MCP server:
-
-```
-plugin/
-├── plugin.json                  # Plugin manifest
-└── skills/
-    ├── tool_guard/              # ALWAYS ACTIVE — granular tools first, API fallback
-    ├── api_reference/           # Syntax reference for api_read/write/delete
-    ├── content_editor/          # Edit existing Slides/Docs/Sheets
-    ├── doc_creator/             # Create branded Google Docs
-    ├── slide_designer/          # Design branded presentations
-    ├── setup_guide/             # Docker install & config guide
-    ├── template_picker/         # Pick the right template from registry
-    ├── layout_planner/          # Visual variety for slide decks
-    ├── chart_builder/           # Data-driven charts (no hallucination)
-    └── brand_checker/           # Post-generation brand compliance
-```
-
-Skills are **installed by symlinking** the `plugin/` directory into `~/.gemini/config/plugins/vopak-workspace`. They teach the agent **how** to use the MCP tools — the server provides the tools, the skills provide the strategy.
-
----
-
-## 9. Migration from Python v1
-
-| Aspect | Python v1 (vopak-mcp) | Go v2 (vopak-workspace-mcp) |
-|:-------|:---------------------|:---------------------------|
-| Language | Python 3.11 + FastMCP | Go 1.25+ + official MCP Go SDK |
-| Docker image | ~800MB (Rust gws + gcloud + Python) | ~22MB (Go binary + Alpine) |
-| CLI dependency | Shells out to `gws` Rust binary | Direct Google API calls |
-| GCP tools | Included (3 CLI wrappers) | **Removed** — separate project |
-| Workspace API bridge | 3 CLI wrappers (gws_read/write/destructive) | 3 Go tools (api_read/api_write/api_delete) |
-| Google preview servers | N/A | **Not required** — workspace-api bridge covers all APIs |
-| Tool count | 42 (workspace + GCP) | 49 (workspace only) |
-| Skill count | 4 (separate plugin) | 10 (co-located in `plugin/`) |
-| Transport | stdio only | stdio + Streamable HTTP |

@@ -90,20 +90,7 @@ vopak-workspace-mcp/
 ├── config/
 │   └── templates.json              # Template registry (17 templates)
 │
-├── plugin/                         # Antigravity plugin (skills)
-│   ├── plugin.json
-│   └── skills/
-│       ├── tool_guard/             # ALWAYS ACTIVE — granular tools first, API fallback
-│       ├── api_reference/          # Syntax reference for api_read/write/delete
-│       ├── content_editor/
-│       ├── doc_creator/
-│       ├── slide_designer/
-│       ├── setup_guide/            # Docker install & config guide
-│       ├── template_picker/        # Pick the right template from registry
-│       ├── layout_planner/         # Visual variety for slide decks
-│       ├── chart_builder/          # Data-driven charts (no hallucination)
-│       └── brand_checker/          # Post-generation brand compliance
-│
+
 ├── tests/
 │   ├── slides_test.go
 │   ├── docs_test.go

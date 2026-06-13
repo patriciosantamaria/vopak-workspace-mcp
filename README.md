@@ -141,13 +141,7 @@ Copy the MCP config into your Antigravity (or other MCP client) configuration:
 
 See [`mcp_config.example.json`](mcp_config.example.json) for the full reference.
 
-### 4. Install the Plugin (Optional)
 
-Symlink the `plugin/` directory to your Antigravity plugins for agent skills:
-
-```bash
-ln -s $(pwd)/plugin ~/.gemini/config/plugins/vopak-workspace
-```
 
 ---
 
@@ -232,30 +226,7 @@ Universal REST bridge for Google Workspace APIs not covered by the granular tool
 
 ---
 
-## Agent Skills (Plugin)
 
-The `plugin/` directory contains 10 agent-side skills that teach AI agents how to use the tools effectively:
-
-| # | Skill | Type | Purpose |
-|:-:|:------|:-----|:--------|
-| 1 | **tool_guard** | Routing | Always-active guard — routes to granular tools first, API bridge as fallback |
-| 2 | **content_editor** | Editing | Tool routing tables for editing existing Slides/Docs/Sheets |
-| 3 | **slide_designer** | Design | HTML-first design → Google Slides with brand compliance |
-| 4 | **doc_creator** | Design | Markdown → branded Google Docs pipeline |
-| 5 | **template_picker** | Selection | Maps user intent to the correct template from the registry |
-| 6 | **layout_planner** | Design | Visual variety enforcement for multi-slide decks |
-| 7 | **chart_builder** | Data Viz | Data-driven charts with brand colors (no hallucinated data) |
-| 8 | **brand_checker** | QA | Post-generation brand compliance verification and auto-fix |
-| 9 | **api_reference** | Reference | Syntax examples for api_read/write/delete across all services |
-| 10 | **setup_guide** | Setup | Docker install and IDE configuration guide |
-
-### Skill Activation Flow
-
-```
-User Request → [tool_guard] → [template_picker] → [layout_planner/chart_builder] → MCP Tools → [brand_checker]
-                "Use the right    "Which template?"     "Visual variety /             Execute       "Verify brand
-                 tool first"                             real data only"                            compliance"
-```
 
 ---
 
@@ -325,9 +296,6 @@ vopak-workspace-mcp/
 │       ├── branded/                # 3 Branded tools + templates.json (4 files)
 │       └── api/                    # 3 API bridge tools (2 files)
 ├── pkg/agentresult/result.go       # Standard AgentResult response type
-├── plugin/                         # Antigravity plugin (10 agent skills)
-│   ├── plugin.json
-│   └── skills/
 ├── config/                         # Configuration files
 ├── Dockerfile                      # Multi-stage Alpine build (~38MB image)
 ├── docker-compose.yml              # ADC volume + TEMPLATE_FOLDER_ID
@@ -337,27 +305,7 @@ vopak-workspace-mcp/
 
 ---
 
-## Migrating from vopak-mcp (Python)
 
-This project replaces the Python-based `vopak-mcp` repository. Key differences:
-
-| | vopak-mcp (old) | vopak-workspace-mcp (new) |
-|:---|:---|:---|
-| **Language** | Python 3.11 | Go 1.25 |
-| **Image size** | ~800MB | ~38MB |
-| **Servers** | 7 (workspace + GCP) | 6 (workspace only) |
-| **Total tools** | 42 | 39 |
-| **GCP tools** | ✅ Included | ❌ Separate (use `gcp-cli`) |
-| **Architecture** | Separate Python modules | Single binary, flag-based |
-| **Templates** | Runtime Drive fetch | Compile-time `//go:embed` |
-| **Auth** | ADC + OAuth | ADC only |
-
-### Migration Steps
-
-1. Build the new Go server: `docker compose up -d --build`
-2. Update your MCP config to use the new container name and binary path
-3. Remove the old `vopak-mcp` container
-4. Verify tools work via the IDE
 
 ---
 
