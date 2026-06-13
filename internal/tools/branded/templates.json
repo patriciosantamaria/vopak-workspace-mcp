@@ -1,0 +1,124 @@
+{
+  "folder_id": "1DcCliXLB4qp8jOStQKPS4iCJUHPE8Lxm",
+  "templates": {
+    "slides_corporate": {
+      "id": "1mXQFyjoLHFHzSJkAMjk6Gha-o-i_5ZEp4A1Y03SmRSc",
+      "type": "presentation",
+      "category": "formal",
+      "placeholders": ["{{DECK_TITLE}}", "{{DATE}}", "{{DECK_SUBTITLE}}"],
+      "version": "1.0"
+    },
+    "doc_add": {
+      "id": "1iYmxrDBzlGVZlfDl3seeJckTXusQQNOns7g697jzwWM",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<ADD topic>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_guideline": {
+      "id": "15L-i3pkYF-loOEA9-hdmPJMWIl7fk6vKgiUAHLG6x6g",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<guideline name>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_procedure": {
+      "id": "1IFat06ytarSjHR6LgXw_hqorjp3xYy7uw5bc5FCMj94",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<procedure name>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_policy": {
+      "id": "1KKUTzqYG2_vOg1UC96sBGaktHInqbA54LVrzlz3a_r0",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<policy name>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_process": {
+      "id": "1OgDMGAsQk6HM-VHfay49YdbWE44mF_UAm7Wc7ET3L-c",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<process name>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_project_brief": {
+      "id": "1A5D_D3gOFUI6gLqdVC1IkvN8mUsrbdY2JNCSM8tcClM",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<project name>", "<document name>", "<mydocs number>"],
+      "version": "4.1"
+    },
+    "doc_incident_report": {
+      "id": "1SBJ7vNtDRrnbRcYwawKazMGAY_Eq3oKCQcH6eLHwEEM",
+      "type": "document",
+      "category": "operational",
+      "placeholders": ["<Problem Ticket>", "<document name>"],
+      "version": "2.0"
+    },
+    "doc_standard": {
+      "id": "18iBThRCAPaHs2bQ20oHDHgxO7PwTi2OApF4sLJc2QxE",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<document name>"],
+      "version": "1.0"
+    },
+    "doc_standard_gocc": {
+      "id": "16HElfPPpa4eWSdf0n8tk8Q_q0XNMXG9lhDIATaT8qbg",
+      "type": "document",
+      "category": "formal",
+      "placeholders": ["<document name>", "<mydocs number>"],
+      "version": "1.0"
+    },
+    "doc_change_plan": {
+      "id": "1Lr4Hc6yWtaBLbRwvIoP0-GakdrXs7aCR4ysSZ9DR5bE",
+      "type": "document",
+      "category": "formal",
+      "placeholders": [],
+      "version": "1.0"
+    },
+    "doc_generic": {
+      "id": "14pt73kMdhpznVrHQRRybEe_2Qj_eqcKVGg8vzErbYUI",
+      "type": "document",
+      "category": "formal",
+      "placeholders": [],
+      "version": "4.1"
+    },
+    "doc_proposal": {
+      "id": "182pG_uOITI0vRUT3pXi0lFtouajrQ7_ofmzU000GUIg",
+      "type": "document",
+      "category": "formal",
+      "placeholders": [],
+      "version": "1.1"
+    },
+    "doc_meeting_tracker": {
+      "id": "1Kn2T2wNOtVOIHvk2CQxszvZpsX1DZaU_5sUar6b0Rrs",
+      "type": "document",
+      "category": "operational",
+      "placeholders": [],
+      "version": "1.0"
+    },
+    "doc_memo": {
+      "id": "1V2N0FrMtVpSyMX5bfe9Jh77cKORT0H6zOrwnWspKhwg",
+      "type": "document",
+      "category": "correspondence",
+      "placeholders": [],
+      "version": "1.0"
+    },
+    "doc_letter_en": {
+      "id": "1AAUFeH-j-Pe9xJSBcTjBz3OBwv-LYuTMaEPgWBmUY8s",
+      "type": "document",
+      "category": "correspondence",
+      "placeholders": [],
+      "version": "1.0"
+    },
+    "doc_letter_nl": {
+      "id": "1kvrx49zcGnO-hssu-m3khE7AwtIDWwAr2NtmetEHOOg",
+      "type": "document",
+      "category": "correspondence",
+      "placeholders": [],
+      "version": "1.0"
+    }
+  }
+}
